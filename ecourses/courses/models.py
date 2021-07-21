@@ -13,11 +13,40 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class Course(models.Model):
-    subject = models.CharField(max_length= 100, null=False, unique=True)
-    description = models.TextField(null=True,blank=False)
-    cteate_date = models.DateTimeField(auto_now_add=True)#tự động cập nhật ngày hiện tại lần đầu tiến lúc add
-    update_date = models.DateTimeField(auto_now=True)#luôn lấy now thời điểm hiện tại, luôn cập nhật
+class ItemBase(models.Model):
+    class Meta:
+        abstract = True #Khai báo ra một model trừu tượng, khi nó chạy nó k tạo ra lớp này nữa, tạo các lớp con thôi
+    subject = models.CharField(max_length=255, null=False)
+    image = models.ImageField(upload_to='courses/%Y/%m', default=None)
+    cteate_date = models.DateTimeField(auto_now_add=True)  # tự động cập nhật ngày hiện tại lần đầu tiến lúc add
+    update_date = models.DateTimeField(auto_now=True)  # luôn lấy now thời điểm hiện tại, luôn cập nhật
     active = models.BooleanField(default=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)#xử lý khi xóa thể loại thì sao ondelete, thể loại xóa thì cái  null
+
+    def __str__(self):
+        return self.subject
+
+#khóa học kế thùa ItemBase
+class Course(ItemBase):
+    class Meta:
+        unique_together = ('subject','category') #Trong một danh mục không được trùng tên khóa học
+        ordering = ["-id"] # sắp xếp khi truy vấn id tăng giảm -id, sắp xếp theo nhiều trường mình quy định, có thể ghi đè lại
+
+    description = models.TextField(null=True,blank=False)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)#SET_NULL khi thể loại xóa thì khóa bị set null chứ k bị xóa theo
+
+
+class Lesson(ItemBase):
+    class Meta:
+        unique_together = (
+        'subject', 'course')  # Trong cùng một khóa học (Course) không được trùng tên (subject) bài học (Lesson)
+        #db_table: "..." # cách đổi tên bảng.
+
+    content = models.TextField()
+    course = models.ForeignKey(Course, related_name="lessons", on_delete=models.CASCADE)
+    # on_delete=models.CASCADE: Cấm --> Khóa học xóa thì nó bị xóa theo
+    #on_delete=models.SET_DEFAULT: Khi Course của Lesson bị xóa đi, các bạn muốn cho Lesson này thuộc vào cái Course mặc định
+    #on_delete=models.PROTECT: Cấm --> Khi những Course có những Lesson thì không được xóa những Course đó
+
+
+
 

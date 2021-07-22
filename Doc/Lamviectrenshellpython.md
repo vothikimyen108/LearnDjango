@@ -55,16 +55,26 @@ lấy đối tượng đó, pk là viết tắt khóa chính,  xem danh sách th
   #### Truy vấn dữ liệu
   **Tìm dữ liệu**
   dùng filter lọc có điều kiện
+  
  **Một số field lookups chỉ định điều kiện**
-    **exact** và **iexact** (so sánh chính xác)
-     **contains** và  **icontains**
-    **in** (trong)
-     **gt**(lớn hơn), **gte**(lớn hơn bằng)
-    **lt**(nhỏ hơn) , **lte**(nhỏ hơn bằng), 	**ange**(between)
-    **startswith**(bắt đầu với), **istartswith**, **endswith**, **iendswith**
-     **i**(là không phân biệt hoa thường)
-    **regex**,** iregex**(truy vấn biểu thức chính quy)
-   **date, year, month, day, hour, minute, second**
+ 
+   **exact** và **iexact** (so sánh chính xác)
+    
+   **contains** và  **icontains**
+   
+  **in** (trong)
+  
+   **gt**(lớn hơn), **gte**(lớn hơn bằng)
+   
+  **lt**(nhỏ hơn) , **lte**(nhỏ hơn bằng), 	**ange**(between)
+  
+  **startswith**(bắt đầu với), **istartswith**, **endswith**, **iendswith**
+  
+   **i**(là không phân biệt hoa thường)
+   
+  **regex**,** iregex**(truy vấn biểu thức chính quy)
+  
+ **date, year, month, day, hour, minute, second**
   ```python
   >>> Course.objects.filter(subject__contains="python")
 <QuerySet [<Course: Course object (1)>]>
@@ -116,12 +126,19 @@ Trong khóa học có những bài học nào theo cách dưới đấy hướng
 ```
   **Một số truy vấn thông dùng**
  • **count()**: số đối tượng trong QuerySet.
+ 
  • **latest()**: trả về đối tượng cuối trong QuerySet dựa trên trường chỉ định. 
+ 
  • **earliest()**: ngược lại với latest() 
+ 
  • **first()**: trả về đối tượng đầu tiên trong QuerySet 
+ 
  • **last()**: trả về đối tượng cuối trong QuerySet 
+ 
  • **exists()**: kiểm tra QuerySet có tồn tại kết quả nào không. 
+ 
  • **aggregate()**: thống kê cho QuerySet (sum, max)
+ 
   •**order_by()**: thực hiện sắp xếp, mặc định QuerySet sắp xếp dựa trên thuộc tính ordering trong Meta của model, ta cũng có thể ghi đè bằng cách sử dụng order_by().
  
  ```python

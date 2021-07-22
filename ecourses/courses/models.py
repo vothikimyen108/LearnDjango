@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from ckeditor.fields import RichTextField
 #import lớp chứng thưc
 
 
@@ -42,7 +43,8 @@ class Lesson(ItemBase):
         'subject', 'course')  # Trong cùng một khóa học (Course) không được trùng tên (subject) bài học (Lesson)
         #db_table: "..." # cách đổi tên bảng.
 
-    content = models.TextField()
+    #content = models.TextField()
+    content = RichTextField() #Tích hợp công cụ edit
     course = models.ForeignKey(Course, related_name="lessons", on_delete=models.CASCADE)
     # on_delete=models.CASCADE: Cấm --> Khóa học xóa thì nó bị xóa theo
     #on_delete=models.SET_DEFAULT: Khi Course của Lesson bị xóa đi, các bạn muốn cho Lesson này thuộc vào cái Course mặc định

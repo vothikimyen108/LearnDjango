@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 #import lớp chứng thưc
 
 
+
 class User(AbstractUser):
     avatar = models.ImageField(upload_to='upload/')
 # Create your models here.
@@ -18,7 +19,7 @@ class ItemBase(models.Model):
         abstract = True #Khai báo ra một model trừu tượng, khi nó chạy nó k tạo ra lớp này nữa, tạo các lớp con thôi
     subject = models.CharField(max_length=255, null=False)
     image = models.ImageField(upload_to='courses/%Y/%m', default=None)
-    cteate_date = models.DateTimeField(auto_now_add=True)  # tự động cập nhật ngày hiện tại lần đầu tiến lúc add
+    created_date= models.DateTimeField(auto_now_add=True)  # tự động cập nhật ngày hiện tại lần đầu tiến lúc add
     update_date = models.DateTimeField(auto_now=True)  # luôn lấy now thời điểm hiện tại, luôn cập nhật
     active = models.BooleanField(default=True)
 
@@ -46,7 +47,12 @@ class Lesson(ItemBase):
     # on_delete=models.CASCADE: Cấm --> Khóa học xóa thì nó bị xóa theo
     #on_delete=models.SET_DEFAULT: Khi Course của Lesson bị xóa đi, các bạn muốn cho Lesson này thuộc vào cái Course mặc định
     #on_delete=models.PROTECT: Cấm --> Khi những Course có những Lesson thì không được xóa những Course đó
+    tags = models.ManyToManyField('Tag', related_name="lessons", blank=True, null=True)   #blank=True: được phép rỗng     #Many to many
 
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
 
+    def __str__(self):
+        return self.name

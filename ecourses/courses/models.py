@@ -4,7 +4,8 @@ from ckeditor.fields import RichTextField
 #import lớp chứng thưc
 
 
-
+#kế thừa lớp người dùng có sẳn, phải để ngay từ đầu
+# nếu muốn mở rộng sau thì dùng one to one
 class User(AbstractUser):
     avatar = models.ImageField(upload_to='upload/')
 # Create your models here.

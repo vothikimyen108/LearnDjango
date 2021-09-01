@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'rest_framework', #fw api
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -137,3 +138,11 @@ CKEDITOR_UPLOAD_PATH = "/lessons/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#cấu hình phân trang
+REST_FRAMEWORK = {
+'DEFAULT_PAGINATION_CLASS':
+'rest_framework.pagination.PageNumberPagination',
+'PAGE_SIZE': 2
+}

@@ -8,7 +8,7 @@ from .admin import admin_site
 #khai báo route
 router = routers.DefaultRouter()
 router.register('courses', views.CourseViewSet)# 2 phần phần đầu, và cái view
-
+router.register('lesson', views.LessonViewSet)
 
 
 urlpatterns = [

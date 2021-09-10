@@ -3,7 +3,7 @@ from django import forms
 from django.db.models import Count
 from django.template.response import TemplateResponse
 from django.urls import path
-from .models import Category, Course, Lesson, Tag,User
+from .models import Category, Course, Lesson, Tag,User, Comment
 from django.contrib.auth.models import Permission
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.utils.html import mark_safe #để tránh xẩy ra lỗi import thư viện này
@@ -41,10 +41,13 @@ class LessonAdmin(admin.ModelAdmin):
 
     inlines = [LessonTagInlineAdmin, ]
 
+
 class CourseAdmin(admin.ModelAdmin):
     inlines = [LessonInlineAdmin, ]
+
 class TagAdmin(admin.ModelAdmin):
     inlines = [LessonTagInlineAdmin, ]
+
 
 #admind site thiết kế lại ui
 class CourseAppAdminSite(admin.AdminSite):
@@ -71,7 +74,8 @@ admin_site = CourseAppAdminSite('mycouses');
 #thêm catogory vô trang admin
 admin.site.register(Category)
 admin.site.register(User)
-admin.site.register(Course,CourseAdmin)
+admin.site.register(Comment)
+admin.site.register(Course, CourseAdmin)
 admin.site.register(Lesson, LessonAdmin)
 #custom lại adminsite nè
 # admin_site.register(Course,CourseAdmin)

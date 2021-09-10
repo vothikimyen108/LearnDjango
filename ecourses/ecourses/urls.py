@@ -16,9 +16,15 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include,re_path
+from django.conf import settings
+from django.views.static import serve
+from django.conf.urls import include, url
+admin.autodiscover()
 urlpatterns = [
     path('', include('courses.urls')),
     path('admin/', admin.site.urls),
     re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
+    path('o/', include('oauth2_provider.urls',namespace='oauth2_provider')),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT, })
 ]
 

@@ -8,6 +8,9 @@ from ckeditor.fields import RichTextField
 # nếu muốn mở rộng sau thì dùng one to one
 class User(AbstractUser):
     avatar = models.ImageField(upload_to='upload/')
+
+
+
 # Create your models here.
 #kế thừa, không cần khai báo khóa chính, từ động nó tạo ra, chỉ trừ khi muốn tạo ra
 class Category(models.Model):
@@ -59,3 +62,12 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True)  # tự động cập nhật ngày hiện tại lần đầu tiến lúc add
+    update_date = models.DateTimeField(auto_now=True)  # luôn lấy now thời điểm hiện tại, luôn cập nhật
+    content = models.TextField()
+    lesson_id = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True)#SET_NULL khi thể loại xóa thì khóa bị set null chứ k bị xóa theo
+    user_id = models.ForeignKey(User, on_delete=models.SET_NULL,
+                                  null=True)  # SET_NULL khi thể loại xóa thì khóa bị set null chứ k bị xóa theo
